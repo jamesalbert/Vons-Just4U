@@ -40,7 +40,6 @@ def addDeals():
     driver.find_element_by_id('SignInBtn').click()
 
     for url in urls:
-        pages = 0
         driver.get(url)
 
         '''close any popups'''
@@ -52,14 +51,13 @@ def addDeals():
             pass
 
         '''click all displayed (unadded) deals, go through 20 pages'''
-        while(pages < 20):
+        for i in range(20):
             deals = driver.find_elements_by_class_name('lt-place-add-button')
             p = threading.Thread(target=click_all, args=(deals,))
             p.start()
             p.join()
             driver.execute_script('window.scrollTo(0, document.body.scrollHeight / 2);')
             driver.implicitly_wait(5)
-            pages += 1
 
     '''close browser'''
     driver.close()
